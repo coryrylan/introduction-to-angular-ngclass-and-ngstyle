@@ -1,12 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import { bootstrapApplication } from '@angular/platform-browser';
 import 'zone.js';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [BrowserModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   template: `
     <h1>Introduction to Angular ngClass and ngStyle</h1>
 
@@ -43,7 +44,6 @@ export class App {
   size = 16;
   displayText = 'show-class';
   visible = true;
-  constructor() { }
 
   toggle() {
     this.visible = !this.visible;
