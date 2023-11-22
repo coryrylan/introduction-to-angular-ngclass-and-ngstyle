@@ -1,16 +1,54 @@
-import './polyfills';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
+import 'zone.js';
 
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [BrowserModule, FormsModule],
+  template: `
+    <h1>Introduction to Angular ngClass and ngStyle</h1>
 
-import { AppModule } from './app/app.module';
+    <p>
+      <a href="https://coryrylan.com/blog/introduction-to-angular-ngclass-and-ngstyle">Tutorial at coryrylan.com</a>
+    </p>
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-  // Ensure Angular destroys itself on hot reloads.
-  if (window['ngRef']) {
-    window['ngRef'].destroy();
+    <div [style.color]="'orange'">style using property syntax</div>
+    <div [className]="'blue'">css class using property syntax</div>
+
+    <br /><br />
+
+    <input [(ngModel)]="color" />
+    <button (click)="size = size + 1">+</button>
+    <button (click)="size = size - 1">-</button>
+
+    <div [ngStyle]="{'color': color, 'font-size': size + 'px'}">
+      style using ngStyle
+    </div>
+
+    <br /><br/>
+
+    <div [ngClass]="['bold-text', 'green']">array of classes</div>
+    <div [ngClass]="'italic-text blue'">string of classes</div>
+    <div [ngClass]="{'small-text': true, 'red': true}">object/map of classes</div>
+
+    <br /><br/>
+
+    <span [ngClass]="displayText">toggled with ngClass</span> <button (click)="toggle()">Toggle</button>
+  `,
+})
+export class App {
+  color = 'pink';
+  size = 16;
+  displayText = 'show-class';
+  visible = true;
+  constructor() { }
+
+  toggle() {
+    this.visible = !this.visible;
+    this.displayText = this.visible ? 'show-class' : 'hide-class';
   }
-  window['ngRef'] = ref;
+}
 
-  // Otherise, log the boot error
-}).catch(err => console.error(err));
+bootstrapApplication(App);
